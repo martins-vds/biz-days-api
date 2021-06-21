@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bizdaysapi/bizdays"
 	"fmt"
 	"log"
 	"net/http"
@@ -26,20 +27,7 @@ func bizdaysHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-type", "application/json")
-	fmt.Fprintf(w, "%f", diff(fromDate, toDate))
-}
-
-func diff(a, b time.Time) (days float64) {
-	if a.Location() != b.Location() {
-		b = b.In(a.Location())
-	}
-	if a.After(b) {
-		a, b = b, a
-	}
-
-	days = b.Sub(a).Hours() / 24
-
-	return
+	fmt.Fprintf(w, "%d", bizdays.Between(fromDate, toDate))
 }
 
 func main() {
