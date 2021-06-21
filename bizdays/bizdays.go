@@ -14,15 +14,15 @@ func Between(a, b time.Time) (days int) {
 	}
 
 	if a.Weekday() == time.Saturday {
-		a = a.Add(2)
+		a = a.Add(time.Hour * 48)
 	} else if a.Weekday() == time.Sunday {
-		a = a.Add(1)
+		a = a.Add(time.Hour * 24)
 	}
 
 	if b.Weekday() == time.Saturday {
-		b = b.Add(-1)
+		b = b.Add(-(time.Hour * 24))
 	} else if b.Weekday() == time.Sunday {
-		b = b.Add(-2)
+		b = b.Add(-(time.Hour * 48))
 	}
 
 	days = int(math.Floor(b.Sub(a).Hours()/24/7))*5 + (5+int(b.Weekday())-int(a.Weekday()))%5
